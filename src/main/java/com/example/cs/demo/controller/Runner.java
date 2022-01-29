@@ -13,7 +13,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -43,7 +43,7 @@ public class Runner implements CommandLineRunner {
 
         log.info("reading data from file", path);
         Stream<String> data = reader.readData(path);
-        Map<String, Task> map = new HashMap<>();
+        Map<String, Task> map = new ConcurrentHashMap<>();
         data.parallel().forEach(taskinfo -> {
             if (taskinfo.strip().length() > 0) {
                 log.debug("trying to parse ", taskinfo, " as a Task");
